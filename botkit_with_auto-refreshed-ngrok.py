@@ -27,23 +27,23 @@ def main():
     # stop the currently running botkit node:
     print("Stopping the current bot...")
     stop_botkit = subprocess.run("pkill -9 node".split(), stdout = subprocess.PIPE)
-    time.sleep(1)
+    time.sleep(10)
 
     # stop the currently running ngrok session:
     print("Stopping the current ngrok session...")
     stop_ngrok = subprocess.run("pkill -9 ngrok".split(), stdout = subprocess.PIPE)
-    time.sleep(1)
+    time.sleep(10)
 
     # start a new ngrok session on http port 3000 (used by botkit):
     print("Starting a new ngrok session...")
     start_ngrok = subprocess.Popen(['ngrok','http', '3000'], stdout = subprocess.PIPE)
-    time.sleep(1)
+    time.sleep(10)
 
     # get the new ngrok session URL for the HTTPS session:
     ngrok_api_url = "http://localhost:4040/api/tunnels"
     ngrok_new_session_response = requests.get(ngrok_api_url).text
     ngrok_new_tunnel_url = json.loads(ngrok_new_session_response)['tunnels'][1]['public_url']
-    time.sleep(1)
+    time.sleep(10)
 
     # start a new botkit node:
     print("Starting a new bot...")
