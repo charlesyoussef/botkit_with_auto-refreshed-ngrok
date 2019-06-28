@@ -26,7 +26,7 @@ __email__ = "cyoussef@cisco.com"
 def main():
     # stop the currently running botkit node:
     print("Stopping the current bot...")
-    stop_ngrok = subprocess.run("pkill -9 node".split(), stdout = subprocess.PIPE)
+    stop_botkit = subprocess.run("pkill -9 node".split(), stdout = subprocess.PIPE)
     time.sleep(1)
 
     # stop the currently running ngrok session:
@@ -36,7 +36,7 @@ def main():
 
     # start a new ngrok session on http port 3000 (used by botkit):
     print("Starting a new ngrok session...")
-    ngrok = subprocess.Popen(['ngrok','http', '3000'], stdout = subprocess.PIPE)
+    start_ngrok = subprocess.Popen(['ngrok','http', '3000'], stdout = subprocess.PIPE)
     time.sleep(1)
 
     # get the new ngrok session URL for the HTTPS session:
@@ -47,8 +47,8 @@ def main():
 
     # start a new botkit node:
     print("Starting a new bot...")
-    command = "PUBLIC_URL=%s node bot.js" % ngrok_new_tunnel_url
-    subprocess.run(command, shell=True)
+    start_botkit = "PUBLIC_URL=%s node bot.js" % ngrok_new_tunnel_url
+    subprocess.run(start_botkit, shell=True)
 
 
 if __name__ == "__main__":
